@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gateshead Council Data Platform — a hands-on portfolio demo showcasing data engineering with Microsoft Fabric, PySpark, SQL, Power BI, and modern data governance.">
+  <meta name="author" content="Data Engineer Portfolio">
+  <title>Gateshead Data Platform | Data Engineering Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <!-- Prism.js — syntax highlighting -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon — data/chart emoji as SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+</head>
+<body>
+
+  <!-- ========== Navigation ========== -->
+  <nav id="main-nav">
+    <div class="nav-brand">
+      <span class="dot"></span>
+      Gateshead Data Platform
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#pipelines">Pipelines</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#quality">Data Quality</a></li>
+      <li><a href="#codelab">Code Lab</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#governance">Governance</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- ========== Hero ========== -->
+  <section id="hero">
+    <div class="section-content">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">
+          <span>📍</span> Gateshead Council — Data Engineer Portfolio
+        </div>
+
+        <h1 class="hero-title">
+          Data engineering<br>
+          <span class="gradient-text">that improves lives.</span>
+        </h1>
+
+        <div id="hero-typing"><span class="cursor"></span></div>
+
+        <p class="hero-bio">
+          I built this as a hands-on demo of how I'd approach building a corporate data platform 
+          at Gateshead Council. Every section below is a <em>working prototype</em> — the pipeline 
+          animations, the dashboards, the data quality engine — they all run real logic in the browser.
+          <br><br>
+          Why? Because talking about data engineering is one thing. <em>Showing it is another.</em>
+        </p>
+
+        <div class="hero-actions">
+          <a href="#pipelines" class="btn btn-primary">Explore the Platform ↓</a>
+          <a href="https://github.com/Angaarpotta/gateshead-data-platform" class="btn btn-outline" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Pipeline Builder ========== -->
+  <section id="pipelines">
+    <div class="section-content">
+      <span class="label">Data Pipelines</span>
+      <h2 class="reveal-on-scroll">Pipeline Builder</h2>
+      <p class="section-subtitle reveal-on-scroll">
+        Interactive ETL pipeline visualisation following a medallion architecture: 
+        Source → Bronze → Silver → Gold → Power BI. Click any stage to see the transformation code and metrics.
+      </p>
+
+      <p id="pipeline-description" class="reveal-on-scroll" style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic;"></p>
+
+      <div id="pipeline-tabs" class="pipeline-selector reveal-on-scroll"></div>
+      <div id="pipeline-canvas" class="pipeline-canvas reveal-on-scroll"></div>
+      <div id="pipeline-detail" class="pipeline-detail"></div>
+    </div>
+  </section>
+
+  <!-- ========== Analytics Dashboard ========== -->
+  <section id="dashboard">
+    <div class="section-content">
+      <span class="label">Analytics</span>
+      <h2 class="reveal-on-scroll">Service Analytics Dashboard</h2>
+      <p class="section-subtitle reveal-on-scroll">
+        Power BI-style dashboard with live filtering. Built with Chart.js using realistic 
+        Gateshead service delivery data — ward-level demographics, deprivation indices, and resource allocation.
+      </p>
+
+      <!-- KPI Cards -->
+      <div id="kpi-container" class="kpi-row reveal-on-scroll"></div>
+
+      <!-- Filters -->
+      <div id="dashboard-filters" class="dashboard-filters reveal-on-scroll"></div>
+
+      <!-- Chart Grid -->
+      <div class="dashboard-grid reveal-on-scroll">
+        <div class="chart-card">
+          <h3>Service Demand Forecast</h3>
+          <p class="chart-subtitle">Monthly requests with 3-month linear projection</p>
+          <canvas id="forecast-chart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Resource Allocation</h3>
+          <p class="chart-subtitle">Budget vs actual spend by department (£ thousands)</p>
+          <canvas id="allocation-chart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Service Type Breakdown</h3>
+          <p class="chart-subtitle">Annual request volumes by department</p>
+          <canvas id="services-chart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Ward Deprivation Index</h3>
+          <p class="chart-subtitle">Top 12 wards by IMD score (higher = more deprived)</p>
+          <canvas id="ward-chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Data Quality Engine ========== -->
+  <section id="quality">
+    <div class="section-content">
+      <span class="label">Data Quality</span>
+      <h2 class="reveal-on-scroll">Data Quality Engine</h2>
+      <p class="section-subtitle reveal-on-scroll">
+        Upload a CSV or use the built-in sample data to run validation rules. 
+        Tests for completeness, format compliance, referential integrity, and business rules — 
+        the same checks that would run in a Fabric notebook post-ingestion.
+      </p>
+
+      <div class="quality-layout reveal-on-scroll">
+        <div>
+          <div id="quality-upload" class="quality-upload">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Drop a CSV file here, or click to browse</div>
+            <div class="upload-hint">Or just hit "Run" to use the built-in sample data with intentional errors</div>
+          </div>
+
+          <div class="quality-controls">
+            <button class="btn btn-primary" id="quality-run">▶ Run Quality Checks</button>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">10 rules × 10 sample records = 100 checks</span>
+          </div>
+        </div>
+
+        <div>
+          <div id="quality-results">
+            <div class="card" style="text-align: center; padding: 40px;">
+              <p style="color: var(--text-muted); font-size: 0.88rem;">
+                Hit "Run Quality Checks" to validate the sample council tax data.<br>
+                <span style="font-size: 0.78rem;">The sample includes intentional errors to demonstrate the engine.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="quality-code"></div>
+    </div>
+  </section>
+
+  <!-- ========== Code Laboratory ========== -->
+  <section id="codelab">
+    <div class="section-content">
+      <span class="label">Code Showcase</span>
+      <h2 class="reveal-on-scroll">Code Laboratory</h2>
+      <p class="section-subtitle reveal-on-scroll">
+        Real-world code examples across SQL, PySpark, Python (splink record linkage), 
+        DAX measures, and dbt models — all written in the context of council data. 
+        Hit "Run" to see simulated output.
+      </p>
+
+      <div class="reveal-on-scroll">
+        <div id="code-tabs" class="code-tabs"></div>
+        <div id="code-panel" class="code-panel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Architecture ========== -->
+  <section id="architecture">
+    <div class="section-content">
+      <span class="label">Platform Design</span>
+      <h2 class="reveal-on-scroll">Platform Architecture</h2>
+      <p class="section-subtitle reveal-on-scroll">
+        End-to-end Microsoft Fabric architecture following a medallion (Bronze/Silver/Gold) 
+        pattern. Click any component to see integration details, volumes, and design rationale.
+      </p>
+
+      <div id="arch-diagram" class="arch-diagram reveal-on-scroll"></div>
+      <div id="arch-detail" class="arch-detail"></div>
+    </div>
+  </section>
+
+  <!-- ========== Governance ========== -->
+  <section id="governance">
+    <div class="section-content">
+      <span class="label">Governance</span>
+      <h2 class="reveal-on-scroll">Data Governance & Catalog</h2>
+      <p class="section-subtitle reveal-on-scroll">
+        Searchable data catalog with lineage tracking, data dictionaries, PII classification, 
+        and governance policies. Click any dataset card to explore its full metadata.
+      </p>
+
+      <div class="catalog-search reveal-on-scroll">
+        <input type="text" id="catalog-search-input" placeholder="Search datasets, columns, owners, classifications...">
+      </div>
+
+      <div id="catalog-grid" class="catalog-grid reveal-on-scroll"></div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer>
+    <div class="section-content">
+      <p style="margin-bottom: 8px;">
+        Built as a portfolio demo for the <strong>Data Engineer</strong> role at Gateshead Council.
+      </p>
+      <p>
+        All data is simulated. No real personal or council data has been used.
+        <br>
+        <a href="https://github.com/Angaarpotta/gateshead-data-platform" target="_blank" rel="noopener">GitHub</a> · 
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ========== App Script ========== -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>
