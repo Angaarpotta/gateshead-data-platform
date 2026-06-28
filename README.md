@@ -1,80 +1,85 @@
 # Gateshead Data Platform — Portfolio Demo
 
-A hands-on, interactive demo of a corporate data platform built for Gateshead Council. This isn't a slide deck — everything here runs real logic in the browser.
-
-I built this to demonstrate how I'd approach building a greenfield data platform in a local government context, covering everything from pipeline design to data governance.
-
-## Live Demo
+A live, fully interactive showcase of a modern corporate data platform built specifically for Gateshead Council.
 
 👉 **[View the live demo](https://angaarpotta.github.io/gateshead-data-platform/)**
 
-## What's Inside
+![Gateshead Data Platform Hero](assets/screenshots/hero.png)
 
-| Section | What It Demonstrates |
-|---|---|
-| **Pipeline Builder** | Interactive ETL pipelines (Council Tax, Housing, Social Care) following a medallion architecture. Click any stage to see real PySpark/SQL code. |
-| **Analytics Dashboard** | Power BI-style dashboard with Chart.js — demand forecasting, resource allocation, ward deprivation analysis. All charts respond to filters. |
-| **Data Quality Engine** | Upload a CSV or use sample data to run 10 validation rules (completeness, format, referential integrity). Shows the Fabric/Python equivalent. |
-| **Code Laboratory** | Real-world examples in SQL, PySpark, Python (splink), DAX, and dbt — each with annotations explaining the "why" behind the code. |
-| **Platform Architecture** | Interactive 6-layer Fabric architecture diagram. Click any component for integration details, volumes, and design rationale. |
-| **Data Governance** | Searchable data catalog with lineage tracking, data dictionaries, PII classification, retention policies, and access controls. |
-
-## Tech Stack
-
-- **Frontend**: Vanilla HTML, CSS, JavaScript (ES Modules)
-- **Charts**: [Chart.js 4](https://www.chartjs.org/)
-- **Syntax Highlighting**: [Prism.js](https://prismjs.com/)
-- **Fonts**: [Inter](https://fonts.google.com/specimen/Inter) + [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono)
-- **Hosting**: GitHub Pages (static — no build step, no server)
-
-## Data Platform Technologies Demonstrated
-
-- **Microsoft Fabric** — Lakehouses, Notebooks, Pipelines, Dataflow Gen2, SQL Analytics Endpoints, Semantic Models
-- **Delta Lake** — ACID transactions, time travel, MERGE (upsert) patterns
-- **PySpark** — DataFrame transformations, window functions, SCD Type 2
-- **SQL** — Complex CTEs, aggregations, views, stored procedures
-- **splink** — Probabilistic record linkage for deduplication across systems
-- **dbt** — Version-controlled transformation models with built-in testing
-- **Power BI / DAX** — Semantic models, measures, row-level security
-- **Data Governance** — Classification, retention, PII handling, GDPR compliance
-
-## Running Locally
-
-Since this is a static site using ES modules, you'll need a local server:
-
-```bash
-# Python
-python -m http.server 8000
-
-# Node.js
-npx serve .
-
-# VS Code
-# Install "Live Server" extension and click "Go Live"
-```
-
-Then open `http://localhost:8000` in your browser.
-
-## Deploying to GitHub Pages
-
-1. Create a new repository on GitHub (e.g., `gateshead-data-platform`)
-2. Push this code:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit — data platform portfolio demo"
-   git branch -M main
-   git remote add origin https://github.com/Angaarpotta/gateshead-data-platform.git
-   git push -u origin main
-   ```
-3. Go to **Settings → Pages** in your repository
-4. Set source to **Deploy from a branch** → **main** → **/ (root)**
-5. Your site will be live at `https://yourusername.github.io/gateshead-data-platform/`
-
-## Disclaimer
-
-All data in this demo is **simulated**. No real personal data, council records, or sensitive information has been used. Ward names, service categories, and system names are based on publicly available information about Gateshead Council.
+## 📌 Project Overview
+This repository contains a working, client-side simulation of a greenfield Microsoft Fabric corporate data platform. It shows how raw council data (Revenues, Housing, Social Care) can be ingested, validated, transformed, and modeled using a medallion architecture (Bronze/Silver/Gold) to deliver actionable insights that improve lives across Gateshead.
 
 ---
 
-*Built with care, not a template.*
+## 🛠️ Data Platform Showcases & Screenshots
+
+### 1. Interactive Medallion Pipeline Builder
+Demonstrates the design and execution of modular ETL pipelines.
+*   **Fabric Equivalence**: Fabric Pipelines + Spark Notebooks.
+*   **Skills shown**: PySpark DataFrame operations, standardizing postcodes, incremental loading with watermarks, and merging datasets (SCD Type 2).
+*   **Action**: Click any stage to inspect the actual code and data volume metrics.
+
+![Pipeline Builder in Action](assets/screenshots/pipeline_details.png)
+
+---
+
+### 2. Service Analytics Dashboard
+A high-fidelity dashboard built with Chart.js to simulate a Power BI implementation.
+*   **Insights**: Service demand trends, 3-month linear regression forecasts, department budget vs. spend, and ward deprivation indexing using ONS IMD scores.
+*   **Aesthetics**: Premium dark theme with matching teal/purple civic accent colors.
+
+![Power BI Dashboard Simulation](assets/screenshots/dashboard.png)
+
+---
+
+### 3. Data Quality (DQ) Engine
+Simulates automated data validation run on raw ingestion.
+*   **Rules**: 10 automated rules covering format validations, ONS ward code integrity, null checking, and boundary limits.
+*   **Interface**: Interactive validation run showing an instant scorecard and issues table.
+
+![Data Quality scorecard and results](assets/screenshots/data_quality.png)
+
+---
+
+### 4. Code Laboratory
+Tabbed showcase of enterprise-ready code templates written for typical local authority challenges:
+*   **SQL**: Complex CTE query identifying residents eligible for Council Tax Support.
+*   **PySpark**: Delta MERGE pattern for Slowly Changing Dimensions (SCD Type 2).
+*   **splink**: Probabilistic record linkage model to deduplicate residents across multiple line-of-business apps without a common ID.
+*   **DAX**: Rolling 3-month averages and YoY percentage measures.
+*   **dbt**: Staging model schemas, constraints, and tests.
+
+![Code Laboratory with CTE match run](assets/screenshots/code_lab.png)
+
+---
+
+### 5. Microsoft Fabric Architecture Design
+An interactive diagram showing the platform's multi-layered layout.
+*   **Layers**: Data Sources ➔ Ingestion ➔ Storage (OneLake Medallion) ➔ Processing ➔ Serving ➔ Consumption (Power BI, Copilot, APIs).
+*   **Detail**: Node clicks expand into design rationale and volume estimates.
+
+![Architecture Diagram detail view](assets/screenshots/architecture.png)
+
+---
+
+### 6. Data Governance Catalog & Lineage
+Maintains platform transparency, auditability, and data security.
+*   **Components**: Searchable ONS dataset catalog, data lineage flows, data dictionary, GDPR privacy/PII flags, and retention policies.
+
+![Governance catalog details](assets/screenshots/governance.png)
+
+---
+
+## 💻 Tech Stack
+*   **Frontend**: HTML5, Vanilla CSS3 (Custom design system), Modern JavaScript (ES Modules)
+*   **Visualizations**: Chart.js 4
+*   **Syntax Highlighting**: Prism.js (Tomorrow theme)
+*   **Typography**: Google Fonts (Inter + JetBrains Mono)
+
+---
+
+## ⚠ Disclaimer
+All data displayed or simulated in this application is entirely synthetic. No real resident records, ONS registers, or council tax data were used. System architecture decisions and mock scenarios are designed based on standard public-sector service datasets.
+
+---
+*Built to showcase modern engineering capability.*
